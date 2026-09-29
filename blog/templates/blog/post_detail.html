@@ -1,26 +1,23 @@
 {% extends 'blog/base.html' %}
 
-{% block title %}{{ post.title }}{% endblock %}
-
 {% block content %}
-<article class="bg-white p-4 rounded shadow-sm border">
-    <h1 class="fw-bold">{{ post.title }}</h1>
-    <div class="text-muted mb-3">
-        Published by <strong>{{ post.author.username }}</strong> on {{ post.created_at|date:"F j, Y, g:i a" }}
-        {% if post.updated_at != post.created_at %}
-            <span class="fst-italic">(Updated {{ post.updated_at|date:"M d, Y" }})</span>
-        {% endif %}
-    </div>
-    
-    <hr>
-    
-    <p class="fs-5" style="white-space: pre-line;">{{ post.content }}</p>
+<div class="container mt-4">
+    <article class="bg-white p-4 rounded shadow-sm border">
+        <h2 class="mb-2">{{ post.title }}</h2>
+        <p class="text-muted small">
+            Posted by <strong>{{ post.author.username }}</strong> on {{ post.created_at|date:"F d, Y" }}
+        </p>
+        <hr>
 
-    {% if user.is_authenticated and post.author == user %}
-        <div class="mt-4 pt-3 border-top">
-            <a href="{% url 'edit_post' post.pk %}" class="btn btn-warning">Edit Post</a>
-            <a href="{% url 'delete_post' post.pk %}" class="btn btn-danger">Delete Post</a>
+        <div class="post-content my-4">
+            <p>{{ post.content|linebreaks }}</p>
         </div>
-    {% endif %}
-</article>
+
+        <hr>
+
+        <div class="mt-4">
+            <a href="{% url 'blog:home' %}" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </article>
+</div>
 {% endblock %}

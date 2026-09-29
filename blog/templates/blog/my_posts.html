@@ -3,27 +3,35 @@
 {% block title %}My Posts{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>My Blog Posts</h1>
-    <a href="{% url 'create_post' %}" class="btn btn-primary">+ Create New Post</a>
-</div>
-
-{% if posts %}
-    <div class="list-group shadow-sm">
-        {% for post in posts %}
-            <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                <div>
-                    <h5 class="mb-1"><a href="{% url 'post_detail' post.pk %}" class="text-decoration-none">{{ post.title }}</a></h5>
-                    <small class="text-muted">Created on {{ post.created_at|date:"M d, Y" }}</small>
-                </div>
-                <div>
-                    <a href="{% url 'edit_post' post.pk %}" class="btn btn-sm btn-outline-warning">Edit</a>
-                    <a href="{% url 'delete_post' post.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
-                </div>
-            </div>
-        {% endfor %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>My Posts</h2>
+        <a href="{% url 'blog:create_post' %}" class="btn btn-primary">+ Create New Post</a>
     </div>
-{% else %}
-    <div class="alert alert-info">You haven't published any posts yet.</div>
-{% endif %}
+
+    {% if posts %}
+        <div class="list-group shadow-sm">
+            {% for post in posts %}
+                <div class="list-group-item d-flex justify-content-between align-items-center p-3">
+                    <div>
+                        <h5 class="mb-1">
+                            <a href="{% url 'blog:post_detail' post.pk %}" class="text-decoration-none text-dark">
+                                {{ post.title }}
+                            </a>
+                        </h5>
+                        <small class="text-muted">Created on {{ post.created_at|date:"M d, Y" }}</small>
+                    </div>
+                    <div>
+                        <a href="{% url 'blog:edit_post' post.pk %}" class="btn btn-sm btn-outline-secondary me-2">Edit</a>
+                        <a href="{% url 'blog:delete_post' post.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            You haven't created any posts yet. <a href="{% url 'blog:create_post' %}">Create one now!</a>
+        </div>
+    {% endif %}
+</div>
 {% endblock %}
