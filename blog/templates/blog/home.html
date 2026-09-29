@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Home - DevBlog{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Recent Posts</h1>
+
+{% if posts %}
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for post in posts %}
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="{% url 'post_detail' post.pk %}" class="text-decoration-none text-dark">{{ post.title }}</a></h5>
+                        <h6 class="card-subtitle mb-2 text-muted">By {{ post.author.username }} | {{ post.created_at|date:"M d, Y" }}</h6>
+                        <p class="card-text">{{ post.content|truncatewords:30 }}</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0">
+                        <a href="{% url 'post_detail' post.pk %}" class="btn btn-sm btn-outline-primary">Read More &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">No posts published yet.</div>
+{% endif %}
+{% endblock %}

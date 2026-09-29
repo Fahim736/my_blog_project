@@ -1,0 +1,32 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ action }} Post{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">{{ action }} Blog Post</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label font-weight-bold">Title</label>
+                        {{ form.title }}
+                        {% if form.title.errors %}<div class="text-danger small">{{ form.title.errors }}</div>{% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label font-weight-bold">Content</label>
+                        {{ form.content }}
+                        {% if form.content.errors %}<div class="text-danger small">{{ form.content.errors }}</div>{% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-success">{{ action }} Post</button>
+                    <a href="{% url 'home' %}" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
